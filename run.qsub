@@ -1,0 +1,12 @@
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=00:30:00
+#PBS -N geoScrape
+#PBS -j oe
+
+cd /users/a/r/areagan/scratch/geodb
+export PATH=/users/a/r/areagan/usr/bin:$PATH
+
+mkdir ${DATE}
+gzip -cd /users/c/d/cdanfort/scratch/twitter/tweet-troll/zipped-raw/${DATE}/${DATE}-${HOUR}-${MINUTE}.gz | jq -c '. | select(.geo!=null or .coordinates!=null)' | gzip > ${DATE}/${DATE}-${HOUR}-${MINUTE}.gz
+
+echo "delete me"
